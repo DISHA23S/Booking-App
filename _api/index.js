@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser"
 const app=express()
 dotenv.config()
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8800;
 
 
 // MongoDB connection
@@ -58,7 +58,7 @@ app.use((err,req,res,next)=>{
 app.get("/",(req,res)=>{
     res.send("Hello")
 })
-app.listen(3000,()=>{
+app.listen(8800,()=>{
    //connect();
     console.log("connect to backend!!")
 })
