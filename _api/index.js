@@ -6,6 +6,7 @@ import hotelsRoute from "./routes/hotels.js"
 import roomsRoute from "./routes/rooms.js"
 import mongoose from "mongoose"
 import cookieParser from "cookie-parser"
+import cors from "cors"
 
 const app=express()
 dotenv.config()
@@ -36,6 +37,7 @@ mongoose.connection.on("connected",()=>{
 
 
 app.use(cookieParser())
+app.use(cors())
 app.use(express.json())
 //middlewarw
 app.use("/api/auth",authRoute);
