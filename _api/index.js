@@ -15,16 +15,18 @@ const PORT = process.env.PORT || 8800;
 
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/booking', {
+
+
+mongoose.connect(process.env.MONGO, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => {
-  console.log("MongoDB connected successfully");
-})
-.catch((error) => {
-  console.error("MongoDB connection error:", error);
-});
+  .then(() => console.log('MongoDB connected successfully'))
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+    console.error('Reason:', err.reason);
+  });
+
 
 
 mongoose.connection.on("disconnected",()=>{

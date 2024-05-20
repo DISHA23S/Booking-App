@@ -1,10 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { SearchContextProvider } from "./context/SearchContext"; // Correct import
+import { AuthContextProvider } from "./context/AuthContext";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <AuthContextProvider>
+      <SearchContextProvider>
+      <App />
+      </SearchContextProvider>
+    </AuthContextProvider>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
