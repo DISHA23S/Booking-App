@@ -15,7 +15,7 @@ import useFetch from "../../hooks/useFetch";
 import { useLocation, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
 import { AuthContext } from "../../context/AuthContext";
-import { Reserve } from "../../components/reserve/Reserve";
+import  Reserve  from "../../components/reserve/Reserve";
 
 const Hotel = () => {
   const location = useLocation();
@@ -29,7 +29,7 @@ const Hotel = () => {
   const { user } = useContext(AuthContext);
   const navigate  =useNavigate();
 
-  const { dates } = useContext(SearchContext);
+  const { dates, options } = useContext(SearchContext);
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
 
@@ -39,10 +39,10 @@ const Hotel = () => {
     return diffDays;
   }
   
-//const days=("Date difference is:-",dayDifference(dates[0].endDate,dates[0].startDate));
+const days=("Date difference is:-",dayDifference(dates[0].endDate,dates[0].startDate));
 
   // Check if dates is defined and has the expected structure
-  const numDays = dates && dates[0] ? dayDifference(dates[0].endDate, dates[0].startDate) : 0;
+  //const numDays = dates && dates[0] ? dayDifference(dates[0].endDate, dates[0].startDate) : 0;
 
   const handleOpen = (i) => {
     setSlideNumber(i);
@@ -63,7 +63,7 @@ const Hotel = () => {
 
   const handleClick=()=>{
     if(user){
-setOpenModal(true);
+      setOpenModal(true);
     }
     else{
       navigate("/login");
@@ -131,13 +131,13 @@ setOpenModal(true);
                 <p className="hotelDesc">{data.desc}</p>
               </div>
               <div className="hotelDetailsPrice">
-                <h1>Perfect for a {numDays}-night stay!</h1>
+                <h1>Perfect for a {days}-night stay!</h1>
                 <span>
                   Located in the real heart of Krakow, this property has an
                   excellent location score of 9.8!
                 </span>
                 <h2>
-                  <b>${data.cheapestPrice * numDays}</b> ({numDays} nights)
+                  <b>${days * data.cheapestPrice * options.room}</b> ({days} nights)
                 </h2>
                 <button onClick={handleClick}>Reserve or Book Now!</button>
               </div>
