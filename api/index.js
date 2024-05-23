@@ -7,6 +7,7 @@ import roomsRoute from "./routes/rooms.js"
 import mongoose from "mongoose"
 import cookieParser from "cookie-parser"
 import cors from "cors"
+import bodyParser from "body-parser";
 
 const app=express()
 dotenv.config()
@@ -46,6 +47,27 @@ app.use("/api/auth",authRoute);
 app.use("/api/users",usersRoute);
 app.use("/api/rooms",roomsRoute);
 app.use("/api/hotels",hotelsRoute);
+let settings = {
+  siteName: 'My Site',
+  maintenanceMode: false,
+};
+
+// Middleware to parse JSON bodies
+app.use(bodyParser.json());
+
+// GET endpoint to retrieve settings
+app.get('/api/settings', (req, res) => {
+  res.json(settings);
+});
+
+// POST endpoint to update settings
+app.post('/api/settings', (req, res) => {
+  const { siteName, maintenanceMode } = req.body;
+  settings.siteName = siteName;
+  settings.maintenanceMode = maintenanceMode;
+  res.json({ message: 'Settings saved successfully' });
+});
+
 
 app.use((err,req,res,next)=>{
   const errorStatus = err.status || 500;

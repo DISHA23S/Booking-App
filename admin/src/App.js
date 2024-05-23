@@ -3,15 +3,19 @@ import Login from "./pages/login/Login";
 import List from "./pages/list/List";
 import Single from "./pages/single/Single";
 import New from "./pages/new/New";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { productInputs, userInputs } from "./formSource";
+import Profile from "./pages/profile/Profile";
 import "./style/dark.scss";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/AuthContext";
 import { hotelColumns, roomColumns, userColumns } from "./datatablesource";
 import NewHotel from "./pages/newHotel/NewHotel";
 import NewRoom from "./pages/newRoom/NewRoom";
+import Settings from './components/settings/Settings';
+import { productInputs, userInputs } from "./formSource";
+import Logout from "./Logout";
+
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -24,6 +28,15 @@ function App() {
     }
 
     return children;
+  };
+
+  const handleLogout = () => {
+    // Perform logout actions here, such as clearing user session, etc.
+    localStorage.removeItem('accessToken'); // Assuming you store the access token in local storage
+    localStorage.removeItem('user'); // Assuming you store user information in local storage
+  
+    // Redirect to the login page after logout
+    window.location.href = '/login';
   };
 
   return (
@@ -87,7 +100,7 @@ function App() {
                 path="new"
                 element={
                   <ProtectedRoute>
-                    <NewHotel  />
+                    <NewHotel />
                   </ProtectedRoute>
                 }
               />
@@ -113,11 +126,23 @@ function App() {
                 path="new"
                 element={
                   <ProtectedRoute>
-                    <NewRoom  />
+                    <NewRoom />
                   </ProtectedRoute>
                 }
               />
             </Route>
+            <Route path="settings">
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <Settings />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+            <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="logout" element={<ProtectedRoute><Logout onLogout={handleLogout} /></ProtectedRoute>} />  {/* Add Logout route */}
           </Route>
         </Routes>
       </BrowserRouter>
@@ -126,3 +151,5 @@ function App() {
 }
 
 export default App;
+
+
